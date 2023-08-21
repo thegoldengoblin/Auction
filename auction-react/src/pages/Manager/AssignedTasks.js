@@ -97,7 +97,7 @@ const AssignedTasks = () => {
       <Container sx={{ marginTop: '2rem' }}>
         <Card>
           <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Assign Manager</DialogTitle>
+            <DialogTitle>Set Status</DialogTitle>
             <DialogContent>
               <Select value={selectedManager} onChange={(e) => setSelectedManager(e.target.value)}>
                 <MenuItem value="delivered">Delivered</MenuItem>

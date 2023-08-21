@@ -29,7 +29,15 @@ const Home = () => {
   if (!settings) {
     return <div>Loading...</div>;
   }
-
+  
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+    const filteredData = data.filter(item => {
+    const endDate = new Date(item.end_date);
+    endDate.setHours(0, 0, 0, 0); 
+    return endDate.getTime() >= currentDate.getTime();
+  });
+  console.log(currentDate);
   return (
     <div>
       <Carousel />
@@ -38,11 +46,11 @@ const Home = () => {
         <h3 className="section_title" style={{ color: '#FF5722', fontSize: '3rem', fontWeight: 'bold' }}>Auctions</h3>
   <h6 className="section_subtitle" style={{ color: '#757575', fontSize: '1.5rem', marginBottom: '50px' }}>Participate in Exciting Auctions and Bid on Unique Items</h6>
           <Grid container spacing={2} justifyContent="center">
-          {data && data.slice(0, 3).map((item, index) => (
-              <Grid item xs={4} sm={4} md={4}  key={index}>
-                <BiddingCard item={item} />
-              </Grid>
-            ))}
+          {filteredData.map((item, index) => (
+            <Grid item xs={4} sm={4} md={4} key={index}>
+              <BiddingCard item={item} />
+            </Grid>
+          ))}
           </Grid>
         </>
         <BrowseMore />

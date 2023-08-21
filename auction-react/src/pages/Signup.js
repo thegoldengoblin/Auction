@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
+import image from '../images/login.jpg';
 
 function Signup() {
   const [name, setName] = useState('');
@@ -62,7 +63,7 @@ function Signup() {
         },
         body: JSON.stringify(userData),
       });
-
+  
       if (response.ok) {
         // Signup successful
         setSuccess(true);
@@ -70,19 +71,28 @@ function Signup() {
       } else {
         // Signup failed
         const errorData = await response.json();
-        console.log('Signup failed', errorData);
-        if (errorData.message && errorData.message.email) {
-          setError('The email has already been taken.');
-        } else if (errorData.message && errorData.message.password) {
-          setPasswordError('The password must be at least 8 characters.');
+        if (errorData.message) {
+          // If the message object exists in the response
+          if (errorData.message.name) {
+            // If the error is about name
+            setError(errorData.message.name[0]);
+          } else if (errorData.message.email) {
+            // If the error is about email
+            setError(errorData.message.email[0]);
+          } else if (errorData.message.password) {
+            // If the error is about password
+            setError(errorData.message.password[0]);
+          } else {
+            setError('Signup failed. Please try again.');
+          }
         } else {
           setError('Signup failed. Please try again.');
         }
       }
-    } catch (error) {
-      console.error('Error:', error);
-      setError('Signup failed. Please try again.');
-    }
+  } catch (error) {
+    console.error('Error:', error);
+    setError('Signup failed. Please try again.');
+  }
   };
 
   const defaultTheme = createTheme();
@@ -91,20 +101,6 @@ function Signup() {
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
@@ -147,8 +143,13 @@ function Signup() {
                 autoComplete="name"
                 autoFocus
                 value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
+                onChange={(e) => {
+                    const re = /[^a-zA-Z ]+/;
+                    if (!re.test(e.target.value)) {
+                        setName(e.target.value)
+                    }
+                }}
+            />
               <TextField
                 margin="normal"
                 required
@@ -204,6 +205,21 @@ function Signup() {
             </Box>
           </Box>
         </Grid>
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage: `url(${image})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: (t) =>
+              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        
       </Grid>
     </ThemeProvider>
   );

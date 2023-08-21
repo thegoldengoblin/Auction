@@ -20,39 +20,51 @@ class UserController extends Controller
     public function signup(Request $request)
     {
         try {
+            // Custom error messages
+            $messages = [
+                'name.required' => 'The name field is required.',
+                'email.required' => 'The email field is required.',
+                'email.email' => 'The email must be a valid email address.',
+                'email.unique' => 'The email has already been taken.',
+                'password.required' => 'The password field is required.',
+                'password.min' => 'The password must be at least 8 characters.',
+                'email.regex' => 'The email must be a valid email address.',
+            ];
+    
             // Validate the request data
             $validatedData = $request->validate([
                 'name' => 'required',
-                'email' => 'required|email|unique:users',
+                'email' => ['required', 'email', 'unique:users', 'regex:/^.+@.+\\..+$/'],
                 'password' => 'required|min:8',
-            ]);
-
+            ], $messages);
+    
             // Log the validated data
             Log::info('Validated Data:', $validatedData);
-
+    
             // Hash the password before storing it
             $validatedData['password'] = Hash::make($request->password);
-
+    
             // Create the user with validated data
             $user = User::create($validatedData);
-
+    
             // Create a token for the user
             $token = $user->createToken('authToken')->plainTextToken;
-
+    
             // Log the created user
             Log::info('User created:', [$user->toArray()]);
-
+    
             // Return the token to the client
             return response()->json(['token' => $token], 201);
         } catch (ValidationException $e) {
             // Log the validation error
             Log::error('Validation error:', $e->errors());
-
+    
+            // Return the error messages separately
             return response()->json(['message' => $e->errors()], 422);
         } catch (\Exception $e) {
             // Log the exception
             Log::error('Exception:', $e->getMessage());
-
+    
             return response()->json(['message' => 'Signup failed. Please try again.'], 500);
         }
     }
@@ -133,33 +145,41 @@ class UserController extends Controller
     }
 
     public function updateProfile(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'mobile' => 'required',
-            'email' => 'required|email|unique:users,email,' . Auth::guard('sanctum')->id(),
-            'whatsapp' => 'required',
-            'address' => 'required',
-            'pincode' => 'required'
-        ]);
+{
+    $messages = [
+        'name.required' => 'The name field is required.',
+        'email.required' => 'The email field is required.',
+        'email.email' => 'The email must be a valid email address.',
+        'email.unique' => 'The email has already been taken.',
+        'email.regex' => 'The email must be a valid email address.',
+    ];
 
-        $user = Auth::guard('sanctum')->user();
+    $request->validate([
+        'name' => 'required',
+        'mobile' => 'required|digits:10',
+        'email' => ['required','email','regex:/^.+@.+\\..+$/', 'unique:users,email,' . Auth::guard('sanctum')->id()],
+        'whatsapp' => 'required|digits:10',
+        'address' => 'required',
+        'pincode' => 'required|digits:6'
+    ] ,$messages);
 
-        if (!$user) {
-            return response()->json(['message' => 'User not authenticated'], 401);
-        }
+    $user = Auth::guard('sanctum')->user();
 
-        $user->name = $request->name;
-        $user->mobile = $request->mobile;
-        $user->email = $request->email;
-        $user->whatsapp = $request->whatsapp;
-        $user->address = $request->address;
-        $user->pincode = $request->pincode;
-
-        $user->save();
-
-        return response()->json(['message' => 'Profile updated successfully']);
+    if (!$user) {
+        return response()->json(['message' => 'User not authenticated'], 401);
     }
+
+    $user->name = $request->name;
+    $user->mobile = $request->mobile;
+    $user->email = $request->email;
+    $user->whatsapp = $request->whatsapp;
+    $user->address = $request->address;
+    $user->pincode = $request->pincode;
+
+    $user->save();
+
+    return response()->json(['message' => 'Profile updated successfully']);
+}
     public function changePassword(Request $request)
     {
         try {

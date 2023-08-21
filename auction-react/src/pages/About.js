@@ -1,46 +1,88 @@
 import React from 'react';
 import { Container, Typography, Grid, Card, CardContent, CardMedia } from '@mui/material';
-import image1 from '../images/image1.jpg';
-import image2 from '../images/image2.jpg';
+import '../css/About.css';
+import img from '../images/about.png'
 
 const AboutUs = () => {
   return (
     <Container maxWidth="xl" sx={{ paddingTop: '40px' }}>
-      <Typography variant="h4" align="center" gutterBottom>
+      
+      <div class="responsive-container-block bigContainer">
+        <div class="responsive-container-block Container">
+    <div class="imgContainer">
+     
+      <img class="mainImg" src="https://i.ibb.co/vktW6ZG/Salesprint-logos-black.png"/>
+    </div>
+    <div class="responsive-container-block textSide">
+      <p class="text-blk heading">
         About Us
-      </Typography>
-
-      <Grid container spacing={4} justifyContent="center">
-        <Grid item xs={12} md={6}>
-          <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <CardMedia component="img" sx={{ height: '400px', objectFit: 'cover' }} image={image1} alt="Extra Food Waste Management" />
-            <CardContent sx={{ flexGrow: 1 }}>
-              <Typography variant="body1" gutterBottom>
-                Extra Food Waste Management is a comprehensive platform designed to address the pressing issue of food waste while promoting sustainable solutions. Our platform aims to connect food donors, recipients, and charities, enabling the efficient distribution of surplus meals and reducing waste in the process.
-              </Typography>
-              <Typography variant="body1">
-                At Extra Food Waste Management, we recognize the significant amount of food that goes to waste each day, while many people struggle to access nutritious meals. Our platform serves as a bridge between those with excess food and those in need, ensuring that no good food goes to waste and that it reaches the individuals and communities that can benefit from it the most.
-              </Typography>
-              <Typography variant="body1">
-                Through our platform, food donors have the opportunity to make a positive impact by sharing their excess meals. Donors can easily upload information about the available food, including the quantity, type, and expiration date. This information helps potential recipients and charities identify suitable donations and coordinate the collection or delivery of the food.
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <CardMedia component="img" sx={{ height: '400px', objectFit: 'cover' }} image={image2} alt="Extra Food Waste Management" />
-            <CardContent sx={{ flexGrow: 1 }}>
-              <Typography variant="body1" gutterBottom>
-                Recipients, on the other hand, can browse the available donations and submit requests based on their specific needs. They can view detailed descriptions of the donated food items, such as whether they are vegetarian or non-vegetarian, and make informed decisions. Our platform also facilitates communication between donors and recipients, allowing them to coordinate the pickup or delivery details.
-              </Typography>
-              <Typography variant="body1">
-                Charities play a crucial role in our platform by connecting with both donors and recipients. They can view the donation listings, communicate with donors, and raise requests for specific types of food based on the needs of the communities they serve. Our platform enables charities to efficiently manage their food distribution activities and ensure that donated meals reach those who need them the most.
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+      </p>
+      <p class="text-blk subHeading">
+      At our Auction Site, we bring buyers and sellers together in an exciting and dynamic online marketplace. Our platform offers a unique and engaging experience, where users can participate in thrilling auctions and discover a wide range of items up for bid.
+</p>
+<p class="text-blk subHeading">
+Our mission is to provide a secure and user-friendly environment that fosters trust and transparency. We value the satisfaction and safety of our users above all else, ensuring a smooth and enjoyable auction experience for everyone.
+      </p>
+      
+      <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
+        <div class="cardImgContainer">
+          <img class="cardImg" src="https://i.ibb.co/6gd0tTz/value.png"/>
+        </div>
+        <div class="cardText">
+          <p class="text-blk cardHeading">
+            True Value
+          </p>
+          <p class="text-blk cardSubHeading">
+            We thrive to give maximum price
+          </p>
+        </div>
+      </div>
+      <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
+        <div class="cardImgContainer">
+          <img class="cardImg" src="https://i.ibb.co/q1p80ts/search.png"/>
+        </div>
+        <div class="cardText">
+          <p class="text-blk cardHeading">
+          Transparency 
+          </p>
+          <p class="text-blk cardSubHeading">
+            Realtime bidding,no more middlemens.
+          </p>
+        </div>
+      </div>
+      <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
+        <div class="cardImgContainer">
+          <img class="cardImg" src="https://i.ibb.co/M6vzcjv/global-connection.png"/>
+        </div>
+        <div class="cardText">
+          <p class="text-blk cardHeading">
+            Global
+          </p>
+          <p class="text-blk cardSubHeading">
+           Connect with wast community
+          </p>
+        </div>
+      </div>
+      <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
+        <div class="cardImgContainer">
+          <img class="cardImg" src="https://i.ibb.co/7bydY4P/verify.png"/>
+        </div>
+        <div class="cardText">
+          <p class="text-blk cardHeading">
+            Verified
+          </p>
+          <p class="text-blk cardSubHeading">
+            Certified products,no more frauds.
+          </p>
+        </div>
+      </div>
+      <a>
+      </a>
+    </div>
+  </div>
+</div>
+          
+      
     </Container>
   );
 };
